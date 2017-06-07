@@ -1,6 +1,6 @@
-create type formulario as object(
+create or replace type formulario as object(
 	codigo int,
-	hidrante GeoPoint,
+	hidrante GeoPoint
 )not final;
 /
 
