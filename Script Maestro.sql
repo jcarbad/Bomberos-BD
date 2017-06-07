@@ -1,3 +1,13 @@
+-- Constantes
+DECLARE 
+   PI constant number := 3.141592654;
+   RADIO_TIERRA_KM INT := 6371; 
+BEGIN  
+   -- output 
+   dbms_output.put_line('Pi: ' || PI); 
+END; 
+/
+
 -- Objeto Bombero
 CREATE OR REPLACE TYPE bombero  AS OBJECT (
 	codigo VARCHAR(10),
