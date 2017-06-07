@@ -29,9 +29,33 @@ END;
 create or replace type GeoPoint as object
 (
 	latitud float,
-	longitud float,
+	longitud float
 );
 /
+
+-- Objeto Hidrante
+create or replace type Hidrante as object(
+	id INTEGER,
+	posicion GeoPoint,
+	calle INTEGER,
+	avenida INTEGER,
+	caudalEsperado FLOAT,
+	estado INTEGER,
+	ultima_inspeccion Bombero,
+	fecha_ultima_inspeccion DATE,
+	trabajo_pendiente INT, 
+	MEMBER FUNCTION distancia_a(punto GeoPoint) RETURN FLOAT
+);
+/
+
+CREATE OR REPLACE TYPE BODY Hidrante AS 
+	MEMBER FUNCTION distancia_a(punto GeoPoint) RETURN FLOAT IS
+	BEGIN
+		RETURN 0;
+	END distancia_a;
+END;
+/
+
 
 --funciones almacenadas
 create or replace function degreestoradians(degrees float)
