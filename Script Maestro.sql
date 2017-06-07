@@ -14,3 +14,11 @@ CREATE OR REPLACE TYPE BODY bombero AS
 	END mostrar;
 END;
 /
+
+--objeto geopoint
+create or replace type GeoPoint as object
+(
+	latitud float,
+	longitud float,
+);
+/
