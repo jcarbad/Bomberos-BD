@@ -1,4 +1,4 @@
--- Objeto Bombero
+------------------------- Objeto Bombero ----------------------------------
 CREATE OR REPLACE TYPE bombero  AS OBJECT (
 	codigo INTEGER,
 	nombre VARCHAR(35),
@@ -22,7 +22,7 @@ INSERT INTO TABLA_BOMBEROS(codigo, nombre) VALUES (1, 'Joan Bombero');
 INSERT INTO TABLA_BOMBEROS(codigo, nombre) VALUES (2, 'Roy Bombero'); 
 INSERT INTO TABLA_BOMBEROS(codigo, nombre) VALUES (3, 'Sergio Bombero');
 
--- Objeto GeoPoint
+--------------------------- Objeto GeoPoint -------------------------------
 CREATE OR REPLACE TYPE GeoPoint AS OBJECT(
 	latitud float,
 	longitud float,
@@ -39,6 +39,9 @@ CREATE OR REPLACE TYPE BODY GeoPoint IS
 END;
 /
 
+----------------------- Objeto hidrante --------------------------------------
+CREATE OR REPLACE TYPE salidasArray AS VARRAY(4) OF INTEGER;
+
 --funcion convertir Grados a Radianes
 create or replace function degreesToRadians(degrees float)
 return float
@@ -48,10 +51,7 @@ begin
 	radian := (degrees * 3.1415926535)/180;
 	return radian;
 end;
-/
-
--- Objeto hidrante
-CREATE OR REPLACE TYPE salidasArray AS VARRAY(4) OF INTEGER; 
+/ 
 
 CREATE OR REPLACE TYPE Hidrante AS OBJECT (
 	posicion GeoPoint,
@@ -127,16 +127,36 @@ INSERT INTO tabla_hidrantes VALUES (GeoPoint(10.012185, -84.214867), 6, 8, 50.3,
 INSERT INTO tabla_hidrantes VALUES (GeoPoint(10.013748, -84.209138), 7, 8, 50.3, salidasArray(1,2,2,3),1, bombero(1, 'Joan Bombero'), SYSDATE,0);
 INSERT INTO tabla_hidrantes VALUES (GeoPoint(10.020426, -84.211005), 7, 7, 50.3, salidasArray(1,2,2,3),1, bombero(2, 'Roy Bombero'), SYSDATE,0);
 
+------------------------ Funciones y procedimientos almacenados -------------------------
 
+CREATE TYPE arrayHidrantes IS TABLE OF Hidrante;
 
+CREATE OR REPLACE FUNCTION RPH(punto GeoPoint, radio FLOAT) RETURN arrayHidrantes 
+IS
+	CURSOR c_hidrantes IS SELECT posicion, calle, avenida, caudalEsperado, salidas 
+							FROM tabla_hidrantes
+							WHERE estado = 1;
+	en_rango arrayHidrantes := arrayHidrantes();
+	hidra Hidrante;
+	distancia FLOAT := 0;
+	nuevo INTEGER := 0;
+BEGIN
+	OPEN c_hidrantes;
+	LOOP
+	FETCH c_hidrantes INTO hidra.posicion, hidra.calle, hidra.avenida, hidra.caudalEsperado, hidra.salidas;
+		EXIT WHEN c_hidrantes%notfound;
+		distancia := hidra.distancia_KM_a(punto);
+		IF (distancia < radio) THEN
+			en_rango.EXTEND;
+			nuevo := en_rango.LAST;
+			arrayHidrantes(nuevo) := hidra;
+		END IF;
+	END LOOP;
+	RETURN en_rango;
+END;
+/
 
-
-
-
-
-
-
--- Pruebas
+------------------------ Pruebas ----------------------------------------------
 DECLARE
 	nuevo Hidrante := Hidrante(GeoPoint(9.9721549,-84.1283363), 10, 7, 50.3, salidasArray(1,2,2,3),1, bombero('1', 'Sergio'), SYSDATE,0);
 	camion GeoPoint := GeoPoint(9.9983516,-84.139515);
