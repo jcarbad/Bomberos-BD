@@ -1,3 +1,4 @@
+set serveroutput on size 30000;
 ------------------------- Objeto Bombero ----------------------------------
 CREATE OR REPLACE TYPE bombero  AS OBJECT (
 	codigo INTEGER,
@@ -116,7 +117,7 @@ CREATE TABLE tabla_hidrantes OF Hidrante (
 	OBJECT IDENTIFIER IS PRIMARY KEY;
 
 
-INSERT INTO tabla_hidrantes VALUES (GeoPoint(10.016707, -84.217978), 10, 3, 50.3, salidasArray(1,2,2,3),1, 1, SYSDATE,0);
+INSERT INTO tabla_hidrantes VALUES (GeoPoint(10.016707, -84.217978),10, 3, 50.3, salidasArray(1,2,2,3),1, bombero(1, 'Joan Carballo'), SYSDATE,0);
 INSERT INTO tabla_hidrantes VALUES (GeoPoint(10.015312, -84.216670), 8, 0, 50.3, salidasArray(1,2,2,3),1, bombero(2, 'Roy Bombero'), SYSDATE,0);
 INSERT INTO tabla_hidrantes VALUES (GeoPoint(10.015735, -84.214996), 4, 0, 50.3, salidasArray(1,2,2,3),1, bombero(3, 'Sergio Bombero'), SYSDATE,0);
 INSERT INTO tabla_hidrantes VALUES (GeoPoint(10.018566, -84.211369), 5, 3, 50.3, salidasArray(1,2,2,3),1, bombero(1, 'Joan Bombero'), SYSDATE,0);
@@ -136,6 +137,7 @@ IS
 	CURSOR c_hidrantes IS SELECT posicion, calle, avenida, caudalEsperado, salidas 
 							FROM tabla_hidrantes
 							WHERE estado = 1;
+	row_h c_hidrantes%ROWTYPE;
 	en_rango arrayHidrantes := arrayHidrantes();
 	hidra Hidrante;
 	distancia FLOAT := 0;
@@ -143,13 +145,14 @@ IS
 BEGIN
 	OPEN c_hidrantes;
 	LOOP
-	FETCH c_hidrantes INTO hidra.posicion, hidra.calle, hidra.avenida, hidra.caudalEsperado, hidra.salidas;
+	FETCH c_hidrantes INTO row_h;
 		EXIT WHEN c_hidrantes%notfound;
-		distancia := hidra.distancia_KM_a(punto);
-		IF (distancia < radio) THEN
+		hidra := Hidrante(row_h.posicion, row_h.calle, row_h.avenida, row_h.caudalEsperado, row_h.salidas, 1, bombero(1, 'Sin asignar'), SYSDATE, 0);
+		distancia := hidra.distancia_M_a(punto);
+		IF (distancia <= radio) THEN
 			en_rango.EXTEND;
 			nuevo := en_rango.LAST;
-			arrayHidrantes(nuevo) := hidra;
+			en_rango(nuevo) := hidra;
 		END IF;
 	END LOOP;
 	RETURN en_rango;
@@ -158,15 +161,22 @@ END;
 
 ------------------------ Pruebas ----------------------------------------------
 DECLARE
-	nuevo Hidrante := Hidrante(GeoPoint(9.9721549,-84.1283363), 10, 7, 50.3, salidasArray(1,2,2,3),1, bombero('1', 'Sergio'), SYSDATE,0);
-	camion GeoPoint := GeoPoint(9.9983516,-84.139515);
-	distancia FLOAT;
+	--camion GeoPoint := GeoPoint(9.970776, -84.128816); -- Escuela de Informática
+    camion GeoPoint := GeoPoint(10.016502, -84.213944);-- Parque Central de Alajuela
+	radio FLOAT := 3000;
+	cercanos arrayHidrantes := arrayHidrantes();
+	rand_p GeoPoint;
 BEGIN
-	distancia := nuevo.distancia_KM_a(camion);
-	dbms_output.put_line('SE ENCUENTRA A KM: ' || distancia);
-	distancia := nuevo.distancia_M_a(camion);
-	dbms_output.put_line('SE ENCUENTRA A M: ' || distancia);
+	cercanos := RPH(camion, radio);
+    IF cercanos.count != 0 THEN
+        FOR i IN cercanos.FIRST .. cercanos.LAST LOOP
+            rand_p := cercanos(i).posicion;
+            dbms_output.put_line('Hidrante #' || TO_CHAR(i) || ' ubicado en Lat: ' || TO_CHAR(rand_p.latitud) || ' y Long: ' || TO_CHAR(rand_p.longitud));
+        END LOOP;
+    ELSE
+        DBMS_OUTPUT.PUT_LINE(' NO SE ENCONTRARON HIDRANTES EN EL RANGO SOLICITADO!');
+    END IF;
 END;
-/ 
+/
 
 
