@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="apps.joan.testoracle.MainActivity">
+
+    <RelativeLayout
+        android:layout_width="368dp"
+        android:layout_height="495dp"
+        tools:layout_editor_absoluteX="7dp"
+        tools:layout_editor_absoluteY="8dp">
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_toEndOf="@+id/lblLatitud"
+            app:srcCompat="@drawable/bomberos_logo"
+            android:layout_alignParentStart="true" />
+
+        <Button
+            android:id="@+id/btnGo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:text="RPH" />
+
+        <TextView
+            android:id="@+id/lblLatitud"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Latitud"
+            android:textSize="24sp"
+            android:layout_marginTop="31dp"
+            android:layout_below="@+id/imageView"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="32dp" />
+
+        <TextView
+            android:id="@+id/lblLongitud"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Longitud"
+            android:textSize="24sp"
+            android:layout_marginTop="44dp"
+            android:layout_below="@+id/txtLatitud"
+            android:layout_alignStart="@+id/lblRadio" />
+
+        <EditText
+            android:id="@+id/txtLatitud"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/lblLatitud"
+            android:layout_toEndOf="@+id/lblLongitud"
+            android:ems="10"
+            android:inputType="numberSigned|numberDecimal"
+            android:text="10.016507" />
+
+        <EditText
+            android:id="@+id/txtLongitud"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/lblLongitud"
+            android:layout_alignEnd="@+id/textView4"
+            android:ems="10"
+            android:inputType="numberSigned|numberDecimal"
+            android:text="-84.213894" />
+
+        <EditText
+            android:id="@+id/txtRadio"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="number"
+            android:text="3000"
+            android:layout_alignBaseline="@+id/lblRadio"
+            android:layout_alignBottom="@+id/lblRadio"
+            android:layout_toStartOf="@+id/textView4" />
+
+        <TextView
+            android:id="@+id/lblRadio"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Radio:"
+            android:textSize="24sp"
+            android:layout_marginTop="33dp"
+            android:layout_below="@+id/lblLongitud"
+            android:layout_alignEnd="@+id/lblLatitud"
+            android:layout_marginEnd="24dp" />
+
+        <TextView
+            android:id="@+id/textView4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="m"
+            android:textSize="24sp"
+            android:layout_alignBaseline="@+id/txtRadio"
+            android:layout_alignBottom="@+id/txtRadio"
+            android:layout_alignEnd="@+id/txtLatitud" />
+
+    </RelativeLayout>
+</android.support.constraint.ConstraintLayout>
