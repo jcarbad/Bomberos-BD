@@ -128,9 +128,27 @@ INSERT INTO tabla_hidrantes VALUES (GeoPoint(10.012185, -84.214867), 6, 8, 50.3,
 INSERT INTO tabla_hidrantes VALUES (GeoPoint(10.013748, -84.209138), 7, 8, 50.3, salidasArray(1,2,2,3),1, bombero(1, 'Joan Bombero'), SYSDATE,0);
 INSERT INTO tabla_hidrantes VALUES (GeoPoint(10.020426, -84.211005), 7, 7, 50.3, salidasArray(1,2,2,3),1, bombero(2, 'Roy Bombero'), SYSDATE,0);
 
+------------------------- Objeto Formulario ---------------------------------------------
+create or replace type formulario as object(
+	codigo INT,
+	hidrante GeoPoint
+)NOT FINAL;
+/
+
+create type mantenimiento under formulario(
+	tipo INT
+);
+/
+
+create type realizado under formulario(
+	anotacion VARCHAR(100)
+);
+/
+
 ------------------------ Funciones y procedimientos almacenados -------------------------
 
 CREATE TYPE arrayHidrantes IS TABLE OF Hidrante;
+/
 
 CREATE OR REPLACE FUNCTION RPH(punto GeoPoint, radio FLOAT) RETURN arrayHidrantes 
 IS
