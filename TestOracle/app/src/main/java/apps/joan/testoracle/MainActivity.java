@@ -88,7 +88,7 @@ public class MainActivity extends AppCompatActivity {
                         Timestamp ultima_rev = (Timestamp)hidrante.getAttributes()[7];
                         String ult_rev = new SimpleDateFormat("dd/MM/yyyy").format(ultima_rev);
                         BigDecimal pendiente = (BigDecimal) hidrante.getAttributes()[8];
-                        enRango.add(new Hidrante(lat, longi, calle, avenida, caudal, new int[]{sal1, sal2, sal3, sal4}, estado, ult_rev, pendiente));
+                        enRango.add(new Hidrante(lat, longi, calle, avenida, caudal, new int[]{sal1, sal2, sal3, sal4}, estado, ult_rev, pendiente, new BigDecimal(0.0)));
                     }
                 }
 
@@ -106,7 +106,6 @@ public class MainActivity extends AppCompatActivity {
         protected void onPostExecute(List<Hidrante> resultante) {
             //super.onPostExecute(aVoid);
             hidraRPH = resultante;
-            Mensaje("Cambio Hidra! tam: " + hidraRPH.size());
             Intent intento = new Intent(getApplicationContext(), MapsActivity.class);
             Bundle b = new Bundle();
             b.putParcelableArrayList("hidrantes", (ArrayList<Hidrante>) hidraRPH);

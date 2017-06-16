@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/imgIcoHidrante"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            app:srcCompat="@drawable/hydrant64"
+            android:layout_centerVertical="true"
+            android:layout_alignParentStart="true" />
+
+        <TextView
+            android:id="@+id/txtUbicacion"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/imgIcoHidrante"
+            android:layout_marginStart="17dp"
+            android:layout_toEndOf="@+id/imgIcoHidrante"
+            android:text="Calle 99, Avenida 99"
+            android:textSize="24sp" />
+
+        <TextView
+            android:id="@+id/txtDistancia"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/txtUbicacion"
+            android:layout_marginStart="10dp"
+            android:layout_toEndOf="@+id/textView6"
+            android:text="9999.99"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Caudal:"
+            android:textSize="16sp"
+            android:layout_below="@+id/txtDistancia"
+            android:layout_alignStart="@+id/textView6" />
+
+        <TextView
+            android:id="@+id/textView5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/txtUbicacion"
+            android:layout_toStartOf="@+id/textView10"
+            android:text="metros"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/textView6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/txtDistancia"
+            android:layout_alignStart="@+id/txtUbicacion"
+            android:text="A "
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/txtCaudal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/textView9"
+            android:layout_centerHorizontal="true"
+            android:text="999.9"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/textView8"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="m3/seg"
+            android:textSize="16sp"
+            android:layout_below="@+id/textView5"
+            android:layout_toEndOf="@+id/txtSalidas" />
+
+        <TextView
+            android:id="@+id/textView9"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Salidas:"
+            android:textSize="16sp"
+            android:layout_below="@+id/textView3"
+            android:layout_alignStart="@+id/textView3"
+            android:layout_marginTop="12dp" />
+
+        <TextView
+            android:id="@+id/textView10"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/textView9"
+            android:layout_alignEnd="@+id/textView8"
+            android:layout_alignTop="@+id/textView9"
+            android:text="pulg." />
+
+        <TextView
+            android:id="@+id/txtSalidas"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/txtCaudal"
+            android:layout_alignTop="@+id/textView9"
+            android:text="10, 12, 13" />
+    </RelativeLayout>
+</LinearLayout>

@@ -153,8 +153,8 @@ CREATE TYPE arrayHidrantes IS TABLE OF Hidrante;
 CREATE OR REPLACE FUNCTION RPH(punto GeoPoint, radio FLOAT) RETURN arrayHidrantes 
 IS
 	CURSOR c_hidrantes IS SELECT posicion, calle, avenida, caudalEsperado, salidas 
-							FROM tabla_hidrantes
-							WHERE estado = 1;
+							FROM tabla_hidrantes;
+							-- WHERE estado = 1; el enunciado pide malos también
 	row_h c_hidrantes%ROWTYPE;
 	en_rango arrayHidrantes := arrayHidrantes();
 	hidra Hidrante;
