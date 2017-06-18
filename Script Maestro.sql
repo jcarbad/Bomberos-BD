@@ -145,7 +145,7 @@ CREATE TYPE arrayHidrantes IS TABLE OF Hidrante;
 
 CREATE OR REPLACE FUNCTION RPH(punto GeoPoint, radio FLOAT) RETURN arrayHidrantes 
 IS
-	CURSOR c_hidrantes IS SELECT posicion, calle, avenida, caudalEsperado, salidas 
+	CURSOR c_hidrantes IS SELECT posicion, calle, avenida, caudalEsperado, salidas, estado 
 							FROM tabla_hidrantes;
 							-- WHERE estado = 1; el enunciado pide malos también
 	row_h c_hidrantes%ROWTYPE;
@@ -158,7 +158,7 @@ BEGIN
 	LOOP
 	FETCH c_hidrantes INTO row_h;
 		EXIT WHEN c_hidrantes%notfound;
-		hidra := Hidrante(row_h.posicion, row_h.calle, row_h.avenida, row_h.caudalEsperado, row_h.salidas, 1, bombero(1, 'Sin asignar'), SYSDATE, 0);
+		hidra := Hidrante(row_h.posicion, row_h.calle, row_h.avenida, row_h.caudalEsperado, row_h.salidas, row_h.estado, bombero(1, 'Sin asignar'), SYSDATE, 0);
 		distancia := hidra.distancia_M_a(punto);
 		IF (distancia <= radio) THEN
 			en_rango.EXTEND;
@@ -182,12 +182,10 @@ BEGIN
 		UPDATE tabla_hidrantes
 		SET estado = 1
 		WHERE :NEW.hidrante = posicion;
-		COMMIT;
 	ELSE
 		UPDATE tabla_hidrantes
 		SET estado = 0
-		WHERE :NEW.hidrante = posicion;
-		COMMIT;
+		WHERE :NEW.hidrante = posicion;		
 	END IF;
 END;
 /

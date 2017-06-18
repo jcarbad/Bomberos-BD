@@ -34,6 +34,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        getSupportActionBar().setTitle("Conocer RPH");
         btnGo = (Button)findViewById(R.id.btnGo);
         txtLat = (TextView) findViewById(R.id.txtLatitud);
         txtLong = (TextView) findViewById(R.id.txtLongitud);
@@ -75,16 +76,16 @@ public class MainActivity extends AppCompatActivity {
                         Struct hidrante = (Struct) dato;
                         Struct GeoPoint = (Struct) hidrante.getAttributes()[0];
                         BigDecimal  lat = (BigDecimal) GeoPoint.getAttributes()[0],
-                                longi = (BigDecimal) GeoPoint.getAttributes()[1];
+                                    longi = (BigDecimal) GeoPoint.getAttributes()[1];
                         BigDecimal  calle = (BigDecimal) hidrante.getAttributes()[1],
-                                avenida = (BigDecimal) hidrante.getAttributes()[2],
-                                caudal = (BigDecimal) hidrante.getAttributes()[3];
+                                    avenida = (BigDecimal) hidrante.getAttributes()[2],
+                                    caudal = (BigDecimal) hidrante.getAttributes()[3];
                         Datum[] salidas = ((ARRAY) hidrante.getAttributes()[4]).getOracleArray();
-                        int  sal1 = salidas[0].intValue(),
-                                sal2 = salidas[1].intValue(),
-                                sal3 = salidas[2].intValue(),
-                                sal4 = salidas[3].intValue();
-                        BigDecimal  estado = (BigDecimal) ((Struct) hidrante.getAttributes()[6]).getAttributes()[0];
+                        int sal1 = salidas[0].intValue(),
+                            sal2 = salidas[1].intValue(),
+                            sal3 = salidas[2].intValue(),
+                            sal4 = salidas[3].intValue();
+                        BigDecimal  estado = (BigDecimal) hidrante.getAttributes()[5];
                         Timestamp ultima_rev = (Timestamp)hidrante.getAttributes()[7];
                         String ult_rev = new SimpleDateFormat("dd/MM/yyyy").format(ultima_rev);
                         BigDecimal pendiente = (BigDecimal) hidrante.getAttributes()[8];

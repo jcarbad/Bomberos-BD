@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -65,6 +66,10 @@ public class ListadoHidrantes extends AppCompatActivity {
                 sals += actual.getSalidas()[i] + ", ";
             sals += actual.getSalidas()[i];
             salidas.setText(sals);
+
+            ImageView imgIco = (ImageView) findViewById(R.id.imgIcoHidrante);
+            if (actual.getEstado().intValue() == 0)
+                imgIco.setImageResource(R.drawable.hidrante_malo64);
 
             return itemHdrante;
         }
