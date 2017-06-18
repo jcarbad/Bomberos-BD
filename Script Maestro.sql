@@ -1,4 +1,3 @@
-set serveroutput on size 30000;
 ------------------------- Objeto Bombero ----------------------------------
 CREATE OR REPLACE TYPE bombero  AS OBJECT (
 	codigo INTEGER,
@@ -158,7 +157,8 @@ BEGIN
 	LOOP
 	FETCH c_hidrantes INTO row_h;
 		EXIT WHEN c_hidrantes%notfound;
-		hidra := Hidrante(row_h.posicion, row_h.calle, row_h.avenida, row_h.caudalEsperado, row_h.salidas, row_h.estado, bombero(1, 'Sin asignar'), SYSDATE, 0);
+		hidra := Hidrante(row_h.posicion, row_h.calle, row_h.avenida, row_h.caudalEsperado, row_h.salidas,
+			row_h.estado, bombero(1, 'Sin asignar'), SYSDATE, 0);
 		distancia := hidra.distancia_M_a(punto);
 		IF (distancia <= radio) THEN
 			en_rango.EXTEND;
@@ -194,7 +194,7 @@ END;
 DECLARE
 	--camion GeoPoint := GeoPoint(9.970776, -84.128816); -- Escuela de Informática
     camion GeoPoint := GeoPoint(10.016502, -84.213944);-- Parque Central de Alajuela
-	radio FLOAT := 3000;
+	radio FLOAT := 700;
 	cercanos arrayHidrantes := arrayHidrantes();
 	rand_p GeoPoint;
 BEGIN
@@ -202,7 +202,8 @@ BEGIN
     IF cercanos.count != 0 THEN
         FOR i IN cercanos.FIRST .. cercanos.LAST LOOP
             rand_p := cercanos(i).posicion;
-            dbms_output.put_line('Hidrante #' || TO_CHAR(i) || ' ubicado en Lat: ' || TO_CHAR(rand_p.latitud) || ' y Long: ' || TO_CHAR(rand_p.longitud));
+            dbms_output.put_line('Hidrante #' || TO_CHAR(i) || ' ubicado en Lat: ' 
+            	|| TO_CHAR(rand_p.latitud) || ' y Long: ' || TO_CHAR(rand_p.longitud));
         END LOOP;
     ELSE
         DBMS_OUTPUT.PUT_LINE(' NO SE ENCONTRARON HIDRANTES EN EL RANGO SOLICITADO!');
