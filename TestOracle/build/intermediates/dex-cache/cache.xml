@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items version="2" >
+
+    <item
+        is-multidex="false"
+        jar="C:\Users\Joan\Documents\GitHub\Bomberos-BD\TestOracle\app\libs\ojdbc6.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.3"
+        sha1="2f89cd9176772c3a6c261ce6a8e3d0d4425f5679">
+        <dex dex="C:\Users\Joan\Documents\GitHub\Bomberos-BD\TestOracle\app\build\intermediates\pre-dexed\debug\ojdbc6_8a2aebcc60d93a7edbb7d97ada8709fa79d944fe.jar" />
+    </item>
+
+</items>

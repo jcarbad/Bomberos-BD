@@ -128,22 +128,15 @@ INSERT INTO tabla_hidrantes VALUES (GeoPoint(10.012185, -84.214867), 6, 8, 50.3,
 INSERT INTO tabla_hidrantes VALUES (GeoPoint(10.013748, -84.209138), 7, 8, 50.3, salidasArray(1,2,2,3),1, bombero(1, 'Joan Bombero'), SYSDATE,0);
 INSERT INTO tabla_hidrantes VALUES (GeoPoint(10.020426, -84.211005), 7, 7, 50.3, salidasArray(1,2,2,3),1, bombero(2, 'Roy Bombero'), SYSDATE,0);
 
-------------------------- Objeto Formulario ---------------------------------------------
-create or replace type formulario as object(
-	codigo INT,
-	hidrante GeoPoint
-)NOT FINAL;
-/
-
-create type mantenimiento under formulario(
-	tipo INT
+------------------------- Tabla Formulario ---------------------------------------------
+CREATE TABLE tabla_mantenimiento (
+	referencia INTEGER NOT NULL,
+	hidrante GeoPoint NOT NULL,
+	tipo INTEGER NOT NULL,
+	descripcion VARCHAR(50),
+	CONSTRAINT pk_realizados PRIMARY KEY (referencia),
+	CONSTRAINT fk_hidrante FOREIGN KEY (hidrante.latitud, hidrante.longitud) REFERENCES tabla_hidrantes (posicion.latitud, posicion.longitud)
 );
-/
-
-create type realizado under formulario(
-	anotacion VARCHAR(100)
-);
-/
 
 ------------------------ Funciones y procedimientos almacenados -------------------------
 
@@ -174,6 +167,28 @@ BEGIN
 		END IF;
 	END LOOP;
 	RETURN en_rango;
+END;
+/
+
+------------------------ TRIGGERS FORMULARIOS ---------------------------------
+-- Trigger #1: Un hidrante en mantenimiento cambia sus estado a deshabilidato
+-- si el tipo de trabajo != 1. Tipos: 0-instalación, 1-resuelto, 2-mantenimiento.
+CREATE OR REPLACE TRIGGER cambio_estado
+AFTER INSERT OR UPDATE ON tabla_mantenimiento
+FOR EACH ROW
+DECLARE
+BEGIN
+	IF :NEW.tipo = 1 THEN
+		UPDATE tabla_hidrantes
+		SET estado = 1
+		WHERE :NEW.hidrante = posicion;
+		COMMIT;
+	ELSE
+		UPDATE tabla_hidrantes
+		SET estado = 0
+		WHERE :NEW.hidrante = posicion;
+		COMMIT;
+	END IF;
 END;
 /
 
