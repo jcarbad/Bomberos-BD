@@ -4,12 +4,12 @@
         "source": "C:\\Users\\Joan\\.android\\build-cache\\976aa81e2aa82dfe846e9752634207609867f0bb\\output\\res\\layout\\select_dialog_item_material.xml"
     },
     {
-        "merged": "C:\\Users\\Joan\\Documents\\GitHub\\Bomberos-BD\\TestOracle\\app\\build\\intermediates\\res\\merged\\debug\\layout\\notification_template_media.xml",
-        "source": "C:\\Users\\Joan\\.android\\build-cache\\976aa81e2aa82dfe846e9752634207609867f0bb\\output\\res\\layout\\notification_template_media.xml"
-    },
-    {
         "merged": "C:\\Users\\Joan\\Documents\\GitHub\\TestOracle\\app\\build\\intermediates\\res\\merged\\debug\\layout\\notification_action.xml",
         "source": "C:\\Users\\Joan\\.android\\build-cache\\976aa81e2aa82dfe846e9752634207609867f0bb\\output\\res\\layout\\notification_action.xml"
+    },
+    {
+        "merged": "C:\\Users\\Joan\\Documents\\GitHub\\Bomberos-BD\\TestOracle\\app\\build\\intermediates\\res\\merged\\debug\\layout\\notification_template_media.xml",
+        "source": "C:\\Users\\Joan\\.android\\build-cache\\976aa81e2aa82dfe846e9752634207609867f0bb\\output\\res\\layout\\notification_template_media.xml"
     },
     {
         "merged": "C:\\Users\\Joan\\Documents\\GitHub\\TestOracle\\app\\build\\intermediates\\res\\merged\\debug\\layout\\abc_screen_toolbar.xml",

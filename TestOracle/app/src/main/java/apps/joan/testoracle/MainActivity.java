@@ -74,6 +74,7 @@ public class MainActivity extends AppCompatActivity {
                     Datum[] datumArray = arrayHidrantes.getOracleArray();
                     for (Datum dato : datumArray) {
                         Struct hidrante = (Struct) dato;
+                        Object[] str = hidrante.getAttributes();
                         Struct GeoPoint = (Struct) hidrante.getAttributes()[0];
                         BigDecimal  lat = (BigDecimal) GeoPoint.getAttributes()[0],
                                     longi = (BigDecimal) GeoPoint.getAttributes()[1];

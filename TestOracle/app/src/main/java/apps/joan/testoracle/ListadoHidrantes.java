@@ -67,9 +67,10 @@ public class ListadoHidrantes extends AppCompatActivity {
             sals += actual.getSalidas()[i];
             salidas.setText(sals);
 
-            ImageView imgIco = (ImageView) findViewById(R.id.imgIcoHidrante);
+            ImageView imgIco = (ImageView) itemHdrante.findViewById(R.id.imgIcoHidrante);
             if (actual.getEstado().intValue() == 0)
                 imgIco.setImageResource(R.drawable.hidrante_malo64);
+
 
             return itemHdrante;
         }

@@ -157,6 +157,7 @@ BEGIN
 	LOOP
 	FETCH c_hidrantes INTO row_h;
 		EXIT WHEN c_hidrantes%notfound;
+		dbms_output.put_line('Estado es: ' || row_h.estado);
 		hidra := Hidrante(row_h.posicion, row_h.calle, row_h.avenida, row_h.caudalEsperado, row_h.salidas,
 			row_h.estado, bombero(1, 'Sin asignar'), SYSDATE, 0);
 		distancia := hidra.distancia_M_a(punto);
@@ -195,6 +196,7 @@ DECLARE
 	--camion GeoPoint := GeoPoint(9.970776, -84.128816); -- Escuela de Informática
     camion GeoPoint := GeoPoint(10.016502, -84.213944);-- Parque Central de Alajuela
 	radio FLOAT := 700;
+    distancia INTEGER := 0;
 	cercanos arrayHidrantes := arrayHidrantes();
 	rand_p GeoPoint;
 BEGIN
@@ -202,7 +204,8 @@ BEGIN
     IF cercanos.count != 0 THEN
         FOR i IN cercanos.FIRST .. cercanos.LAST LOOP
             rand_p := cercanos(i).posicion;
-            dbms_output.put_line('Hidrante #' || TO_CHAR(i) || ' ubicado en Lat: ' 
+            distancia := cercanos(i).distancia_M_a(camion);
+            dbms_output.put_line('Hidrante ubicado a '|| TO_CHAR(distancia, '9999') || ' metros, en Lat: ' 
             	|| TO_CHAR(rand_p.latitud) || ' y Long: ' || TO_CHAR(rand_p.longitud));
         END LOOP;
     ELSE
